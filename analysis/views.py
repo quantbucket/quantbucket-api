@@ -13,8 +13,14 @@ def run(request):
 	analysis = Analysis(dataset=dataset,algorithm=algorithm,output=response)
 	analysis.save()
 	response = {
-		'algorithm' : algorithm.name,
-		'dataset' : dataset.name,
+		'algorithm' : {
+			'id' : algorithm.id,
+			'name' : algorithm.name
+		},
+		'dataset' : {
+			'id' : dataset.id,
+			'name' : dataset.name
+		},
 		'result' : response,
 		'status' : 200
 	}
