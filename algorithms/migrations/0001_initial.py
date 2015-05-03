@@ -19,7 +19,11 @@ class Migration(migrations.Migration):
                 ('module', models.CharField(max_length=255)),
                 ('version', models.CharField(max_length=255)),
                 ('description', models.TextField()),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('developer', models.ForeignKey(to='users.User')),
             ],
+            options={
+                'db_table': 'algorithms',
+            },
         ),
     ]

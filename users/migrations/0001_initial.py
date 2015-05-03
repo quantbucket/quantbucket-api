@@ -17,6 +17,10 @@ class Migration(migrations.Migration):
                 ('email', models.EmailField(max_length=254)),
                 ('password', models.CharField(max_length=50)),
                 ('api_key', models.CharField(max_length=255)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
             ],
+            options={
+                'db_table': 'users',
+            },
         ),
     ]

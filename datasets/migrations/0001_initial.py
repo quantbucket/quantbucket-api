@@ -17,7 +17,11 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=255)),
                 ('data', models.FileField(upload_to=b'')),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('user', models.ForeignKey(to='users.User')),
             ],
+            options={
+                'db_table': 'datasets',
+            },
         ),
     ]

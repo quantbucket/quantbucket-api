@@ -1,11 +1,21 @@
 from django.http import HttpResponse
-import algorithms
-import datasets
-import visualizations
+from algorithms.models import Algorithm
+from datasets.models import Dataset
+from visualizations.models import Visualization
+from analysis.models import Analysis
 import json
 
 def run(request):
-	dataset = datasets.models.Dataset.objects.get(pk=request.GET['dataset']).content()
-	algorithm = algorithms.models.Algorithm.objects.get(pk=request.GET['algorithm']).load()
-	response = algorithm(dataset).output
+	dataset = Dataset.objects.get(pk=request.GET['dataset'])
+	algorithm = Algorithm.objects.get(pk=request.GET['algorithm'])
+	instance = algorithm.load()
+	response = instance(dataset.content()).output
+	analysis = Analysis(dataset=dataset,algorithm=algorithm,output=response)
+	analysis.save()
+	response = {
+		'algorithm' : algorithm.name,
+		'dataset' : dataset.name,
+		'result' : response,
+		'status' : 200
+	}
 	return HttpResponse(json.dumps(response))

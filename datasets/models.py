@@ -1,11 +1,14 @@
 from django.db import models
 import users
 
-# Create your models here.
 class Dataset(models.Model):
 	name = models.CharField(max_length=255)
 	user = models.ForeignKey(users.models.User)
 	data = models.FileField()
+	created_at = models.DateTimeField(auto_now_add=True)
+
+	class Meta:
+		db_table = 'datasets'
 
 	def content(self):
 		docs = [
