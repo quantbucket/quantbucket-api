@@ -1,0 +1,3 @@
+[submodule "algorithms/quantbucket-repo"]
+	path = algorithms/quantbucket-repo
+	url = https://github.com/quantbucket/quantbucket-repo
