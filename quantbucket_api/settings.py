@@ -43,6 +43,8 @@ INSTALLED_APPS = (
     'analysis',
     'visualizations',
     'django_extensions',
+    'rest_framework',
+    'storages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -107,6 +109,23 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Specific App variables
+#REST Services configuration
 
-ALGORITHMS_PATH = 'algorithms/quantbucket-repo/modules/'
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+   'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
+}
+
+#AWS S3 Storage
+
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+
+AWS_STORAGE_BUCKET_NAME = 'quantbucket'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
