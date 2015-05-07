@@ -1,6 +1,7 @@
 from django.db import models
 import users
 import sys
+import json
 
 class Algorithm(models.Model):
 	name = models.CharField(max_length=255)
@@ -18,4 +19,10 @@ class Algorithm(models.Model):
 		sys.path.append('algorithms/quantbucket-repo/algorithms/'+self.name)
 		module = __import__('app')
 		cls = getattr(module,'Application')
-		return class
+		return cls
+
+	def schema(self):
+		#Need to refactor this with python packages		
+		sys.path.append('algorithms/quantbucket-repo/algorithms/'+self.name)
+		json_schema = open('algorithms/quantbucket-repo/algorithms/'+self.name+'/schema.json','r')
+		return json.loads(json_schema.read())
