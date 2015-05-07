@@ -5,6 +5,7 @@ import datasets
 class Analysis(models.Model):
 	dataset = models.ForeignKey(datasets.models.Dataset)
 	algorithm = models.ForeignKey(algorithms.models.Algorithm)
+	schema = models.TextField()
 	output = models.TextField()
 	created_at = models.DateTimeField(auto_now_add=True)
 
