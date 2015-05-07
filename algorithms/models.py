@@ -13,7 +13,9 @@ class Algorithm(models.Model):
 		db_table = 'algorithms'
 
 	def load(self):
-		sys.path.append('algorithms/quantbucket-repo/modules/'+self.name)
+		#Need to refactor this with python packages
+		sys.path.append('algorithms/quantbucket-repo/algorithms')
+		sys.path.append('algorithms/quantbucket-repo/algorithms/'+self.name)
 		module = __import__('app')
 		cls = getattr(module,'Application')
-		return cls
+		return class
