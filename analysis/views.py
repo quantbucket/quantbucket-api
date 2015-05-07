@@ -17,4 +17,4 @@ class AnalysisViewSet(viewsets.ModelViewSet):
 		algorithm = Algorithm.objects.get(pk=self.request.data['algorithm'])
 		instance = algorithm.load()
 		response = instance(dataset.content(),schema).output
-		serializer.save(dataset=dataset,algorithm=algorithm,schema=schema,output=response)
+		serializer.save(dataset=dataset,algorithm=algorithm,schema=schema,output=str(response))
