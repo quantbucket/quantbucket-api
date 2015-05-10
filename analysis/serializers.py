@@ -1,15 +1,16 @@
 from analysis.models import Analysis, AnalysisVisualization
 from rest_framework import serializers
 
-class AnalysisSerializer(serializers.ModelSerializer):
-	output = serializers.CharField(required=False)
-
-    	class Meta:
-        	model = Analysis
-        	fields = ('id', 'dataset', 'algorithm', 'schema', 'output', 'created_at')
-
-class AnalysisVisualizationSerializer(serializers.ModelSerializer):
+class AnalysisVisualizationSerializer(serializers.HyperlinkedModelSerializer):
 
     	class Meta:
         	model = AnalysisVisualization
-        	fields = ('id', 'analysis', 'visualization', 'image', 'created_at')        	
+        	fields = ('id', 'visualization', 'image', 'created_at')
+
+class AnalysisSerializer(serializers.HyperlinkedModelSerializer):
+	output = serializers.CharField(required=False)
+	visualizations = AnalysisVisualizationSerializer(many=True, read_only=True)
+
+    	class Meta:
+        	model = Analysis
+        	fields = ('id', 'dataset', 'algorithm', 'schema', 'output', 'visualizations', 'created_at')

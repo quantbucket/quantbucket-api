@@ -25,13 +25,6 @@ class AnalysisViewSet(viewsets.ModelViewSet):
 		new_analysis = serializer.save(dataset=dataset,algorithm=algorithm,schema=json.dumps(schema),output=json.dumps(response))
 		self.plot(new_analysis)
 
-    	@detail_route(methods=['get'])
-    	def visualizations(self, request, pk=None):
-    		analysis = self.get_object()
-    		analysis_visualizations = analysis.analysisvisualization_set.all()
-    		serializer = AnalysisVisualizationSerializer(analysis_visualizations, many=True)
-    		return Response(serializer.data)
-
 	def plot(self,analysis):
 		vizs = analysis.algorithm.visualization_set.all()
 		for v in vizs:

@@ -17,7 +17,7 @@ class Analysis(models.Model):
 		db_table = 'analysis'
 
 class AnalysisVisualization(models.Model):
-	analysis = models.ForeignKey(Analysis)
+	analysis = models.ForeignKey(Analysis, related_name='visualizations')
 	visualization = models.ForeignKey(Visualization)
 	image = models.FileField(upload_to=upload_path_handler)
 	created_at = models.DateTimeField(auto_now_add=True)
