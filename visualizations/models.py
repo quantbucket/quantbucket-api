@@ -37,7 +37,8 @@ class Visualization(models.Model):
 		#Need to refactor this with python packages
 		sys.path.append('algorithms/quantbucket-repo/')
 		sys.path.append('algorithms/quantbucket-repo/visualizations/'+self.name)
-		module = __import__('chart')
+		print self.name
+		module = __import__(self.name)
 		cls = getattr(module,'Chart')
 		return cls
 

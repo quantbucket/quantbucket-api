@@ -18,3 +18,7 @@ class VisualizationViewSet(viewsets.ModelViewSet):
     	mappings = viz.algorithm_mappings(algorithm_id)
     	serializer = VisualizationMappingSerializer(mappings, many=True)
     	return Response(serializer.data)
+
+class VisualizationMappingViewSet(viewsets.ModelViewSet):
+    queryset = VisualizationMapping.objects.all()
+    serializer_class = VisualizationMappingSerializer

@@ -17,7 +17,7 @@ class Algorithm(models.Model):
 		#Need to refactor this with python packages
 		sys.path.append('algorithms/quantbucket-repo/')
 		sys.path.append('algorithms/quantbucket-repo/algorithms/'+self.name)
-		module = __import__('app')
+		module = __import__(self.name)
 		cls = getattr(module,'Application')
 		return cls
 

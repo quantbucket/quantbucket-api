@@ -7,7 +7,7 @@ class AnalysisVisualizationSerializer(serializers.HyperlinkedModelSerializer):
         	model = AnalysisVisualization
         	fields = ('id', 'visualization', 'image', 'created_at')
 
-class AnalysisSerializer(serializers.HyperlinkedModelSerializer):
+class AnalysisSerializer(serializers.ModelSerializer):
 	output = serializers.CharField(required=False)
 	visualizations = AnalysisVisualizationSerializer(many=True, read_only=True)
 

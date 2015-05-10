@@ -13,9 +13,10 @@ router.register(r'algorithms', algorithms.views.AlgorithmViewSet)
 router.register(r'analysis', analysis.views.AnalysisViewSet)
 router.register(r'datasets', datasets.views.DatasetViewSet)
 router.register(r'visualizations', visualizations.views.VisualizationViewSet)
+router.register(r'mappings', visualizations.views.VisualizationMappingViewSet)
 
 
 urlpatterns = [
 	url(r'^', include(router.urls)),
-	url(r'^admin/', include(admin.site.urls)),#url(r'^analysis/', include('analysis.urls')),
+	url(r'^admin/', include(admin.site.urls)),
 ]
