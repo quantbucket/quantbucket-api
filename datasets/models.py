@@ -3,10 +3,13 @@ import users
 import csv
 from StringIO import StringIO
 
+def upload_path_handler(instance, filename):
+    return "datasets/user_{id}/{file}".format(id=instance.user.id, file=filename)
+
 class Dataset(models.Model):
 	name = models.CharField(max_length=255)
 	user = models.ForeignKey(users.models.User)
-	data = models.FileField(upload_to=lambda instance, filename: 'datasets/{0}/{1}'.format(instance.user.id, filename))	
+	data = models.FileField(upload_to=upload_path_handler)
 	created_at = models.DateTimeField(auto_now_add=True)
 
 	class Meta:

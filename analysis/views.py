@@ -2,10 +2,15 @@ from django.http import HttpResponse
 from algorithms.models import Algorithm
 from datasets.models import Dataset
 from visualizations.models import Visualization
-from analysis.models import Analysis
+from analysis.models import Analysis, AnalysisVisualization
 from rest_framework import viewsets
-from analysis.serializers import AnalysisSerializer
+from analysis.serializers import AnalysisSerializer,AnalysisVisualizationSerializer
 import json
+from django.core.files import File
+from django.core.files.base import ContentFile
+from rest_framework.decorators import detail_route
+from rest_framework.response import Response
+
 
 class AnalysisViewSet(viewsets.ModelViewSet):
     	queryset = Analysis.objects.all()
@@ -17,4 +22,22 @@ class AnalysisViewSet(viewsets.ModelViewSet):
 		algorithm = Algorithm.objects.get(pk=self.request.data['algorithm'])
 		instance = algorithm.load()
 		response = instance(dataset.content(),schema).output
-		serializer.save(dataset=dataset,algorithm=algorithm,schema=schema,output=str(response))
+		new_analysis = serializer.save(dataset=dataset,algorithm=algorithm,schema=json.dumps(schema),output=json.dumps(response))
+		self.plot(new_analysis)
+
+    	@detail_route(methods=['get'])
+    	def visualizations(self, request, pk=None):
+    		analysis = self.get_object()
+    		analysis_visualizations = analysis.analysisvisualization_set.all()
+    		serializer = AnalysisVisualizationSerializer(analysis_visualizations, many=True)
+    		return Response(serializer.data)
+
+	def plot(self,analysis):
+		vizs = analysis.algorithm.visualization_set.all()
+		for v in vizs:
+			viz_backend = v.load()
+			viz_schema = v.schema_mapper(analysis)
+			response = viz_backend(analysis.dataset.content(),viz_schema).output
+			analysis_viz =  AnalysisVisualization(analysis=analysis,visualization=v)
+			analysis_viz.image.save(v.name,ContentFile(response.getvalue()))
+			analysis_viz.save()

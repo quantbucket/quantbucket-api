@@ -5,12 +5,14 @@ import users.views
 import algorithms.views
 import analysis.views
 import datasets.views
+import visualizations.views
 
 router = routers.DefaultRouter()
 router.register(r'users', users.views.UserViewSet)
 router.register(r'algorithms', algorithms.views.AlgorithmViewSet)
 router.register(r'analysis', analysis.views.AnalysisViewSet)
 router.register(r'datasets', datasets.views.DatasetViewSet)
+router.register(r'visualizations', visualizations.views.VisualizationViewSet)
 
 
 urlpatterns = [

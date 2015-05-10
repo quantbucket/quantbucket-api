@@ -15,7 +15,7 @@ class Algorithm(models.Model):
 
 	def load(self):
 		#Need to refactor this with python packages
-		sys.path.append('algorithms/quantbucket-repo/algorithms')
+		sys.path.append('algorithms/quantbucket-repo/')
 		sys.path.append('algorithms/quantbucket-repo/algorithms/'+self.name)
 		module = __import__('app')
 		cls = getattr(module,'Application')
@@ -23,6 +23,6 @@ class Algorithm(models.Model):
 
 	def schema(self):
 		#Need to refactor this with python packages		
-		sys.path.append('algorithms/quantbucket-repo/algorithms/'+self.name)
+		sys.path.append('algorithms/quantbucket-repo/'+self.name)
 		json_schema = open('algorithms/quantbucket-repo/algorithms/'+self.name+'/schema.json','r')
 		return json.loads(json_schema.read())
